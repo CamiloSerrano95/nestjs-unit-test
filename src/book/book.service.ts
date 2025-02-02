@@ -12,10 +12,8 @@ import { User } from '../auth/schemas/user.schema';
 
 @Injectable()
 export class BookService {
-  constructor(
-    @InjectModel(Book.name)
-    private bookModel: mongoose.Model<Book>,
-  ) {}
+
+  constructor(@InjectModel(Book.name) private readonly bookModel: mongoose.Model<Book>) {}
 
   async findAll(query: Query): Promise<Book[]> {
     const resPerPage = 2;
