@@ -54,15 +54,14 @@ describe('BookService', () => {
 
         it('should return an array of books', async () => {
             const query = { page: "1", keyword: "test" }
-            jest.spyOn(model, 'find').mockImplementation(
-                () =>
-                ({
-                    limit: () => ({
-                        skip: jest.fn().mockResolvedValue([mockBook]),
-                    }),
-                } as any),
-            );
-            
+
+            const mockFind = {
+                limit: jest.fn().mockReturnThis(),
+                skip: jest.fn().mockResolvedValue([mockBook]),
+            };
+
+            jest.spyOn(model, 'find').mockReturnValue(mockFind as any);
+
             const result = await bookService.findAll(query)
             expect(model.find).toHaveBeenCalledWith({
                 title: { $regex: 'test', $options: 'i' },
