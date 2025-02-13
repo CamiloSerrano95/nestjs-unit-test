@@ -16,11 +16,10 @@ import { UpdateBookDto } from './dto/update-book.dto';
 import { Book } from './schemas/book.schema';
 
 import { Query as ExpressQuery } from 'express-serve-static-core';
-import { AuthGuard } from '@nestjs/passport';
 
 @Controller('books')
 export class BookController {
-  constructor(private bookService: BookService) {}
+  constructor(private readonly bookService: BookService) {}
 
   @Get()
   async getAllBooks(@Query() query: ExpressQuery): Promise<Book[]> {
@@ -28,7 +27,6 @@ export class BookController {
   }
 
   @Post()
-  @UseGuards(AuthGuard())
   async createBook(
     @Body()
     book: CreateBookDto,
