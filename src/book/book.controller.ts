@@ -7,8 +7,7 @@ import {
   Post,
   Put,
   Query,
-  Req,
-  UseGuards,
+  Req
 } from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
@@ -32,7 +31,7 @@ export class BookController {
     book: CreateBookDto,
     @Req() req,
   ): Promise<Book> {
-    return this.bookService.create(book, req.user);
+    return this.bookService.create(book);
   }
 
   @Get(':id')
@@ -57,7 +56,7 @@ export class BookController {
   async deleteBook(
     @Param('id')
     id: string,
-  ): Promise<Book> {
+  ): Promise<{ deleted: boolean }> {
     return this.bookService.deleteById(id);
   }
 }

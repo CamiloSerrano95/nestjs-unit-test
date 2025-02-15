@@ -81,7 +81,8 @@ describe('BookService', () => {
                 category: Category.FANTASY,
             };
 
-            const result = await bookService.create(newBook as CreateBookDto, mockUser as User)
+            //const result = await bookService.create(newBook as CreateBookDto, mockUser as User)
+            const result = await bookService.create(newBook as CreateBookDto)
 
             expect(result).toEqual(mockBook)
         })
@@ -141,7 +142,7 @@ describe('BookService', () => {
 
             const result = await bookService.deleteById(mockBook._id)
             expect(model.findByIdAndDelete).toHaveBeenCalledWith(mockBook._id);
-            expect(result).toEqual(mockBook);
+            expect(result).toEqual({ deleted: true });
         })
     })
 })

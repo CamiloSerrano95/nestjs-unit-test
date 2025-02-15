@@ -36,8 +36,8 @@ export class BookService {
     return books;
   }
 
-  async create(book: Book, user: User): Promise<Book> {
-    const data = Object.assign(book, { user: user._id });
+  async create(book: Book): Promise<Book> {
+    const data = Object.assign(book);
 
     const res = await this.bookModel.create(data);
     return res;
@@ -66,7 +66,12 @@ export class BookService {
     });
   }
 
-  async deleteById(id: string): Promise<Book> {
-    return await this.bookModel.findByIdAndDelete(id);
+  async deleteById(id: string): Promise<{ deleted: boolean }> {
+    await this.bookModel.findByIdAndDelete(id);
+    
+    return {
+      deleted: true
+    }
+    
   }
 }
